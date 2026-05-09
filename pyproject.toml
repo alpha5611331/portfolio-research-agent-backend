@@ -1,7 +1,7 @@
 [project]
 name = "research-agent-backend"
 version = "0.1.0"
-description = "AI Research Command Center — multi-agent backend"
+description = "AI Research Command Center - multi-agent backend"
 requires-python = ">=3.12"
 dependencies = [
     "fastapi>=0.115",
@@ -21,12 +21,7 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = [
-    "ruff>=0.11",
-    "pytest>=8.3",
-    "pytest-asyncio>=0.25",
-    "httpx>=0.28",
-]
+dev = ["ruff>=0.11", "pytest>=8.3", "pytest-asyncio>=0.25", "httpx>=0.28"]
 
 [tool.ruff]
 target-version = "py312"
