@@ -1,0 +1,57 @@
+# Environment
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+wheels/
+*.so
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# uv
+.uv/
+uv.lock
+
+# Testing
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Ruff / linters
+.ruff_cache/
+
+# Type checking
+.mypy_cache/
+.pyright/
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
