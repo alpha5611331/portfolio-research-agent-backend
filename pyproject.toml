@@ -1,0 +1,42 @@
+[project]
+name = "research-agent-backend"
+version = "0.1.0"
+description = "AI Research Command Center — multi-agent backend"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "websockets>=14.0",
+    "langgraph>=0.3",
+    "langchain-core>=0.3",
+    "langchain-openai>=0.3",
+    "tavily-python>=0.5",
+    "qdrant-client>=1.13",
+    "openai>=1.75",
+    "pydantic>=2.10",
+    "pydantic-settings>=2.7",
+    "python-dotenv>=1.0",
+    "httpx>=0.28",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.11",
+    "pytest>=8.3",
+    "pytest-asyncio>=0.25",
+    "httpx>=0.28",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
