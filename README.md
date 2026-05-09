@@ -1,6 +1,6 @@
 # Research Agent — Backend
 
-FastAPI + LangGraph multi-agent backend for the [AI Research Command Center](https://github.com/alpha5611331/portfolio-research-agent).
+FastAPI + LangGraph multi-agent backend for the [AI Research Command Center](https://github.com/vectorleap-pulseportfolio-research-agent).
 
 ![Demo](images/demo.gif)
 
@@ -8,9 +8,9 @@ FastAPI + LangGraph multi-agent backend for the [AI Research Command Center](htt
 
 | | Link |
 |---|---|
-| Main | [portfolio-research-agent](https://github.com/alpha5611331/portfolio-research-agent) |
-| Backend (this) | [portfolio-research-agent-backend](https://github.com/alpha5611331/portfolio-research-agent-backend) |
-| Frontend | [portfolio-research-agent-frontend](https://github.com/alpha5611331/portfolio-research-agent-frontend) |
+| Main | [portfolio-research-agent](https://github.com/vectorleap-pulseportfolio-research-agent) |
+| Backend (this) | [portfolio-research-agent-backend](https://github.com/vectorleap-pulseportfolio-research-agent-backend) |
+| Frontend | [portfolio-research-agent-frontend](https://github.com/vectorleap-pulseportfolio-research-agent-frontend) |
 
 ## Stack
 
