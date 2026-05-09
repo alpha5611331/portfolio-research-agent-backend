@@ -1,6 +1,5 @@
-from openai import BadRequestError
-
 from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
+from openai import BadRequestError
 
 from app.services.llm import get_llm
 from app.state import ResearchState, SubtopicResult

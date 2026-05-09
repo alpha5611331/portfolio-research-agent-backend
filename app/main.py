@@ -1,4 +1,5 @@
 import asyncio
+import contextlib
 import json
 import uuid
 from contextlib import asynccontextmanager
@@ -19,10 +20,8 @@ _ws_queues: dict[str, asyncio.Queue] = {}
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    try:
+    with contextlib.suppress(Exception):
         await ensure_collection()
-    except Exception:
-        pass
     yield
 
 
@@ -41,9 +40,7 @@ def _now() -> str:
     return datetime.now(UTC).isoformat()
 
 
-async def _emit(
-    session_id: str, event: str, agent: str, data: dict, subtopic: str | None = None
-):
+async def _emit(session_id: str, event: str, agent: str, data: dict, subtopic: str | None = None):
     q = _ws_queues.get(session_id)
     if q:
         await q.put(
@@ -75,9 +72,7 @@ async def _run_research(session_id: str, request: ResearchRequest):
 
             if kind == "on_chain_end" and name == "planner":
                 subtopics = event["data"]["output"].get("subtopics", [])
-                await _emit(
-                    session_id, "PLAN_CREATED", "planner", {"subtopics": subtopics}
-                )
+                await _emit(session_id, "PLAN_CREATED", "planner", {"subtopics": subtopics})
 
             elif kind == "on_chain_end" and name == "researcher":
                 results = event["data"]["output"].get("results", [])
@@ -101,22 +96,16 @@ async def _run_research(session_id: str, request: ResearchRequest):
                         subtopic=r["subtopic"],
                     )
 
-            elif kind == "on_chat_model_stream" and "synthesizer" in str(
-                event.get("tags", [])
-            ):
+            elif kind == "on_chat_model_stream" and "synthesizer" in str(event.get("tags", [])):
                 chunk = event["data"]["chunk"].content
                 if chunk:
-                    await _emit(
-                        session_id, "REPORT_CHUNK", "synthesizer", {"chunk": chunk}
-                    )
+                    await _emit(session_id, "REPORT_CHUNK", "synthesizer", {"chunk": chunk})
 
             elif kind == "on_chain_end" and name == "synthesizer":
                 report = event["data"]["output"].get("report", "")
                 _sessions[session_id]["report"] = report
                 _sessions[session_id]["status"] = "done"
-                await _emit(
-                    session_id, "REPORT_DONE", "synthesizer", {"report": report}
-                )
+                await _emit(session_id, "REPORT_DONE", "synthesizer", {"report": report})
 
     except Exception as e:
         _sessions[session_id]["status"] = "error"
