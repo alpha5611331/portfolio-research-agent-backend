@@ -4,18 +4,18 @@ FastAPI + LangGraph multi-agent backend for the [AI Research Command Center](htt
 
 ## Stack
 
-| Layer | Technology |
-|---|---|
-| API | FastAPI + Uvicorn |
-| Agent framework | LangGraph `StateGraph` |
-| LLM | `langchain-openai` (`ChatOpenAI`) — OpenAI + Groq via `base_url` |
-| Web search | Tavily Python client |
-| Vector DB | Qdrant (`qdrant-client`) |
-| Streaming | WebSocket + LangGraph `.astream_events()` |
-| Validation | Pydantic v2 + pydantic-settings |
-| Package manager | uv |
-| Linter | Ruff |
-| Tests | pytest + pytest-asyncio |
+| Layer           | Technology                                                              |
+| --------------- | ----------------------------------------------------------------------- |
+| API             | FastAPI + Uvicorn                                                       |
+| Agent framework | LangGraph `StateGraph`                                                |
+| LLM             | `langchain-openai` (`ChatOpenAI`) — OpenAI + Groq via `base_url` |
+| Web search      | Tavily Python client                                                    |
+| Vector DB       | Qdrant (`qdrant-client`)                                              |
+| Streaming       | WebSocket + LangGraph `.astream_events()`                             |
+| Validation      | Pydantic v2 + pydantic-settings                                         |
+| Package manager | uv                                                                      |
+| Linter          | Ruff                                                                    |
+| Tests           | pytest + pytest-asyncio                                                 |
 
 ## Prerequisites
 
@@ -47,7 +47,7 @@ EMBEDDING_MODEL=text-embedding-3-small
 ## Run
 
 ```bash
-uv run uvicorn main:app --reload --port 8000
+uv run python -m app.main
 ```
 
 ## API
@@ -85,6 +85,7 @@ START → planner → [Send × N subtopics] → researcher (×N, parallel)
 ```
 
 Each Researcher node runs a tool-calling loop with two LangChain tools:
+
 - `tavily_search` — web search via Tavily API
 - `qdrant_rag` — semantic retrieval from past research sessions
 
