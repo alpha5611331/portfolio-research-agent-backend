@@ -13,13 +13,15 @@ async def summarizer_node(state: ResearchState) -> dict:
         sources_text = "\n".join(
             f"- [{s['title']}]({s['url']}): {s['snippet']}" for s in result["sources"]
         )
-        response = await llm.ainvoke([
-            {"role": "system", "content": SYSTEM},
-            {
-                "role": "user",
-                "content": f"Subtopic: {result['subtopic']}\n\nSources:\n{sources_text}",
-            },
-        ])
+        response = await llm.ainvoke(
+            [
+                {"role": "system", "content": SYSTEM},
+                {
+                    "role": "user",
+                    "content": f"Subtopic: {result['subtopic']}\n\nSources:\n{sources_text}",
+                },
+            ]
+        )
         updated_results.append({**result, "summary": response.content})
 
     return {"results": updated_results}

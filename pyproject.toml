@@ -17,7 +17,6 @@ dependencies = [
     "pydantic-settings>=2.7",
     "python-dotenv>=1.0",
     "httpx>=0.28",
-    "langchain-anthropic>=1.4.3",
     "loguru>=0.7.3",
 ]
 
