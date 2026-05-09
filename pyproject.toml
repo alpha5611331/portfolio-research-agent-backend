@@ -11,7 +11,6 @@ dependencies = [
     "langchain-core>=0.3",
     "langchain-openai>=0.3",
     "tavily-python>=0.5",
-    "qdrant-client>=1.13",
     "openai>=1.75",
     "pydantic>=2.10",
     "pydantic-settings>=2.7",

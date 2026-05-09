@@ -11,9 +11,5 @@ class Settings(BaseSettings):
     llm_provider: str = "openai"
     llm_model: str = "gpt-4o-mini"
 
-    qdrant_url: str = "http://localhost:6333"
-    qdrant_collection: str = "research_sessions"
-    embedding_model: str = "text-embedding-3-small"
-
 
 settings = Settings()

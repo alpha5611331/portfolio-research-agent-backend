@@ -1,10 +1,3 @@
-import uuid
-
-from qdrant_client.models import PointStruct
-
-from app.config import settings
-from app.db.qdrant_client import get_client
-from app.services.embeddings import get_embeddings
 from app.services.llm import get_llm
 from app.state import ResearchState
 
@@ -35,31 +28,4 @@ async def synthesizer_node(state: ResearchState) -> dict:
     )
     report = response.content
 
-    await _index_in_qdrant(state, report, all_sources)
-
     return {"report": report}
-
-
-async def _index_in_qdrant(state: ResearchState, report: str, sources: list[dict]) -> None:
-    try:
-        embeddings = get_embeddings()
-        client = get_client()
-        vector = await embeddings.aembed_query(report[:2000])
-        await client.upsert(
-            collection_name=settings.qdrant_collection,
-            points=[
-                PointStruct(
-                    id=str(uuid.uuid4()),
-                    vector=vector,
-                    payload={
-                        "session_id": state["session_id"],
-                        "query": state["query"],
-                        "text": report[:1000],
-                        "url": sources[0]["url"] if sources else "",
-                        "title": f"Research: {state['query'][:60]}",
-                    },
-                )
-            ],
-        )
-    except Exception:
-        pass

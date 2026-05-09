@@ -10,7 +10,6 @@ FastAPI + LangGraph multi-agent backend for the [AI Research Command Center](htt
 | Agent framework | LangGraph `StateGraph`                                                |
 | LLM             | `langchain-openai` (`ChatOpenAI`) — OpenAI + Groq via `base_url` |
 | Web search      | Tavily Python client                                                    |
-| Vector DB       | Qdrant (`qdrant-client`)                                              |
 | Streaming       | WebSocket + LangGraph `.astream_events()`                             |
 | Validation      | Pydantic v2 + pydantic-settings                                         |
 | Package manager | uv                                                                      |
@@ -21,7 +20,6 @@ FastAPI + LangGraph multi-agent backend for the [AI Research Command Center](htt
 
 - Python 3.12+
 - [uv](https://docs.astral.sh/uv/)
-- Qdrant running at `localhost:6333` (Docker: `docker run -p 6333:6333 qdrant/qdrant`)
 - API keys: OpenAI, Groq, Tavily
 
 ## Setup
@@ -37,11 +35,8 @@ cp .env.example .env  # fill in your keys
 OPENAI_API_KEY=sk-...
 GROQ_API_KEY=gsk_...
 TAVILY_API_KEY=tvly-...
-QDRANT_URL=http://localhost:6333
-QDRANT_COLLECTION=research_sessions
-DEFAULT_LLM_PROVIDER=openai
-DEFAULT_MODEL=gpt-4o-mini
-EMBEDDING_MODEL=text-embedding-3-small
+LLM_PROVIDER=openai
+LLM_MODEL=gpt-4o-mini
 ```
 
 ## Run
@@ -65,7 +60,7 @@ WS     /ws/{session_id}       Real-time agent event stream
 
 ```json
 {
-  "event": "PLAN_CREATED | SEARCH_DONE | RAG_DONE | SOURCES_COLLECTED | SUMMARY_CHUNK | SUMMARY_DONE | REPORT_CHUNK | REPORT_DONE | ERROR",
+  "event": "PLAN_CREATED | SEARCH_DONE | SOURCES_COLLECTED | SUMMARY_CHUNK | SUMMARY_DONE | REPORT_CHUNK | REPORT_DONE | ERROR",
   "session_id": "uuid",
   "timestamp": "ISO-8601",
   "agent": "planner | researcher | summarizer | synthesizer",
@@ -84,10 +79,9 @@ START → planner → [Send × N subtopics] → researcher (×N, parallel)
                                           synthesizer → END
 ```
 
-Each Researcher node runs a tool-calling loop with two LangChain tools:
+Each Researcher node runs a tool-calling loop with one LangChain tool:
 
 - `tavily_search` — web search via Tavily API
-- `qdrant_rag` — semantic retrieval from past research sessions
 
 ## Development
 

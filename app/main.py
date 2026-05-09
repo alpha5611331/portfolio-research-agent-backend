@@ -1,15 +1,12 @@
 import asyncio
-import contextlib
 import json
 import uuid
-from contextlib import asynccontextmanager
 from datetime import UTC, datetime
 
 import uvicorn
 from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.db.qdrant_client import ensure_collection
 from app.graph import graph
 from app.models.schemas import ResearchRequest, ResearchResponse, SessionSummary
 from app.state import ResearchState
@@ -18,14 +15,7 @@ _sessions: dict[str, dict] = {}
 _ws_queues: dict[str, asyncio.Queue] = {}
 
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    with contextlib.suppress(Exception):
-        await ensure_collection()
-    yield
-
-
-app = FastAPI(title="Research Agent API", lifespan=lifespan)
+app = FastAPI(title="Research Agent API")
 
 app.add_middleware(
     CORSMiddleware,
