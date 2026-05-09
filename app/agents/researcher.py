@@ -1,3 +1,5 @@
+from openai import BadRequestError
+
 from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
 
 from app.services.llm import get_llm
@@ -8,6 +10,13 @@ from app.tools.tavily_search import tavily_search
 TOOLS = [tavily_search, qdrant_rag]
 SYSTEM = """You are a research assistant. Collect sources on the given subtopic using the available tools.
 Call tavily_search for web results and qdrant_rag for past research. Collect at least 3 sources."""
+
+
+def _add_source(item: dict, sources: list[dict], seen_urls: set[str]) -> None:
+    url = item.get("url", "")
+    if url and url not in seen_urls:
+        seen_urls.add(url)
+        sources.append(item)
 
 
 async def researcher_node(state: ResearchState, subtopic: str) -> dict:
@@ -21,7 +30,17 @@ async def researcher_node(state: ResearchState, subtopic: str) -> dict:
     seen_urls: set[str] = set()
 
     for _ in range(4):
-        response = await llm.ainvoke(messages)
+        try:
+            response = await llm.ainvoke(messages)
+        except BadRequestError:
+            # Model failed to produce a valid tool call (common with some Groq models).
+            # Fall back to a direct search so the pipeline still gets results.
+            fallback = await tavily_search.ainvoke({"query": subtopic})
+            if isinstance(fallback, list):
+                for item in fallback:
+                    _add_source(item, sources, seen_urls)
+            break
+
         messages.append(response)
 
         if not response.tool_calls:
@@ -35,10 +54,7 @@ async def researcher_node(state: ResearchState, subtopic: str) -> dict:
             messages.append(ToolMessage(content=str(result), tool_call_id=call["id"]))
             if isinstance(result, list):
                 for item in result:
-                    url = item.get("url", "")
-                    if url and url not in seen_urls:
-                        seen_urls.add(url)
-                        sources.append(item)
+                    _add_source(item, sources, seen_urls)
 
     result: SubtopicResult = {"subtopic": subtopic, "sources": sources, "summary": ""}
     return {"results": [result]}
