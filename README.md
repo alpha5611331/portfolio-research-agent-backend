@@ -2,6 +2,8 @@
 
 FastAPI + LangGraph multi-agent backend for the [AI Research Command Center](https://github.com/alpha5611331/portfolio-research-agent).
 
+![Demo](images/demo.gif)
+
 ## Repositories
 
 | | Link |
