@@ -1,6 +1,14 @@
 # Research Agent — Backend
 
-FastAPI + LangGraph multi-agent backend for the [AI Research Command Center](https://github.com/alpha5611331/portfolio-research-agent-backend).
+FastAPI + LangGraph multi-agent backend for the [AI Research Command Center](https://github.com/alpha5611331/portfolio-research-agent).
+
+## Repositories
+
+| | Link |
+|---|---|
+| Main | [portfolio-research-agent](https://github.com/alpha5611331/portfolio-research-agent) |
+| Backend (this) | [portfolio-research-agent-backend](https://github.com/alpha5611331/portfolio-research-agent-backend) |
+| Frontend | [portfolio-research-agent-frontend](https://github.com/alpha5611331/portfolio-research-agent-frontend) |
 
 ## Stack
 
