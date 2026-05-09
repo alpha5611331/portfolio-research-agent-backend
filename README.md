@@ -1,4 +1,4 @@
-# Research Agent — Backend
+# Research Agent - Backend
 
 FastAPI + LangGraph multi-agent backend for the [AI Research Command Center](https://github.com/vectorleap-pulseportfolio-research-agent).
 
@@ -18,7 +18,7 @@ FastAPI + LangGraph multi-agent backend for the [AI Research Command Center](htt
 | --------------- | ----------------------------------------------------------------------- |
 | API             | FastAPI + Uvicorn                                                       |
 | Agent framework | LangGraph `StateGraph`                                                |
-| LLM             | `langchain-openai` (`ChatOpenAI`) — OpenAI + Groq via `base_url` |
+| LLM             | `langchain-openai` (`ChatOpenAI`) - OpenAI + Groq via `base_url` |
 | Web search      | Tavily Python client                                                    |
 | Streaming       | WebSocket + LangGraph `.astream_events()`                             |
 | Validation      | Pydantic v2 + pydantic-settings                                         |
@@ -91,7 +91,7 @@ START → planner → [Send × N subtopics] → researcher (×N, parallel)
 
 Each Researcher node runs a tool-calling loop with one LangChain tool:
 
-- `tavily_search` — web search via Tavily API
+- `tavily_search` - web search via Tavily API
 
 ## Development
 
