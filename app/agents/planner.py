@@ -7,7 +7,7 @@ Return ONLY a JSON array of subtopic strings. Example: ["subtopic 1", "subtopic 
 
 
 async def planner_node(state: ResearchState) -> dict:
-    llm = get_llm(state["provider"], state["model"])
+    llm = get_llm()
     response = await llm.ainvoke([
         {"role": "system", "content": SYSTEM},
         {"role": "user", "content": f"Research question: {state['query']}"},

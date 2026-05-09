@@ -16,7 +16,7 @@ Be comprehensive, analytical, and cite sources throughout."""
 
 
 async def synthesizer_node(state: ResearchState) -> dict:
-    llm = get_llm(state["provider"], state["model"])
+    llm = get_llm()
 
     summaries = "\n\n".join(
         f"### {r['subtopic']}\n{r['summary']}" for r in state["results"]

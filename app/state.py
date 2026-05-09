@@ -1,6 +1,5 @@
 from typing import Annotated
 from typing_extensions import TypedDict
-import operator
 
 
 class SubtopicResult(TypedDict):
@@ -16,8 +15,6 @@ def merge_results(a: list[SubtopicResult], b: list[SubtopicResult]) -> list[Subt
 class ResearchState(TypedDict):
     query: str
     session_id: str
-    provider: str
-    model: str
     subtopics: list[str]
     results: Annotated[list[SubtopicResult], merge_results]
     report: str

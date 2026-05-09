@@ -10,7 +10,7 @@ Call tavily_search for web results and qdrant_rag for past research. Collect at 
 
 
 async def researcher_node(state: ResearchState, subtopic: str) -> dict:
-    llm = get_llm(state["provider"], state["model"]).bind_tools(TOOLS)
+    llm = get_llm().bind_tools(TOOLS)
     messages = [
         SystemMessage(content=SYSTEM),
         HumanMessage(content=f"Research this subtopic thoroughly: {subtopic}"),

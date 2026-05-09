@@ -28,7 +28,7 @@ app = FastAPI(title="Research Agent API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://localhost:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -56,8 +56,6 @@ async def _run_research(session_id: str, request: ResearchRequest):
     state: ResearchState = {
         "query": request.query,
         "session_id": session_id,
-        "provider": request.provider,
-        "model": request.model,
         "subtopics": [],
         "results": [],
         "report": "",

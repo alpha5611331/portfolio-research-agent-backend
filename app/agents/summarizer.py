@@ -6,7 +6,7 @@ concise 2-3 paragraph summary. Include key facts, cite sources by URL where rele
 
 
 async def summarizer_node(state: ResearchState) -> dict:
-    llm = get_llm(state["provider"], state["model"])
+    llm = get_llm()
     updated_results = []
 
     for result in state["results"]:
