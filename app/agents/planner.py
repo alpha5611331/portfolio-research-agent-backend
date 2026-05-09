@@ -1,6 +1,7 @@
 import json
-from app.state import ResearchState
+
 from app.services.llm import get_llm
+from app.state import ResearchState
 
 SYSTEM = """You are a research planner. Given a research question, break it into 3-5 focused subtopics.
 Return ONLY a JSON array of subtopic strings. Example: ["subtopic 1", "subtopic 2", "subtopic 3"]"""

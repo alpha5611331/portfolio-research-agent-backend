@@ -1,5 +1,5 @@
-from app.state import ResearchState
 from app.services.llm import get_llm
+from app.state import ResearchState
 
 SYSTEM = """You are a research summarizer. Given a subtopic and its collected sources, write a clear,
 concise 2-3 paragraph summary. Include key facts, cite sources by URL where relevant."""

@@ -1,10 +1,12 @@
-from app.state import ResearchState
-from app.services.llm import get_llm
+import uuid
+
+from qdrant_client.models import PointStruct
+
+from app.config import settings
 from app.db.qdrant_client import get_client
 from app.services.embeddings import get_embeddings
-from app.config import settings
-from qdrant_client.models import PointStruct
-import uuid
+from app.services.llm import get_llm
+from app.state import ResearchState
 
 SYSTEM = """You are a research synthesizer. Merge the subtopic summaries into a structured report with:
 ## Executive Summary

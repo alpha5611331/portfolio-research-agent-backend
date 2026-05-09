@@ -1,17 +1,17 @@
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
-from contextlib import asynccontextmanager
-from datetime import datetime, UTC
 import asyncio
-import uuid
 import json
+import uuid
+from contextlib import asynccontextmanager
+from datetime import UTC, datetime
 
 import uvicorn
+from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
+from fastapi.middleware.cors import CORSMiddleware
 
-from app.models.schemas import ResearchRequest, ResearchResponse, SessionSummary
-from app.graph import graph
-from app.state import ResearchState
 from app.db.qdrant_client import ensure_collection
+from app.graph import graph
+from app.models.schemas import ResearchRequest, ResearchResponse, SessionSummary
+from app.state import ResearchState
 
 _sessions: dict[str, dict] = {}
 _ws_queues: dict[str, asyncio.Queue] = {}

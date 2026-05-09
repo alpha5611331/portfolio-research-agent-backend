@@ -1,8 +1,9 @@
 from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
-from app.state import ResearchState, SubtopicResult
+
 from app.services.llm import get_llm
-from app.tools.tavily_search import tavily_search
+from app.state import ResearchState, SubtopicResult
 from app.tools.qdrant_rag import qdrant_rag
+from app.tools.tavily_search import tavily_search
 
 TOOLS = [tavily_search, qdrant_rag]
 SYSTEM = """You are a research assistant. Collect sources on the given subtopic using the available tools.

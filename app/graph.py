@@ -1,10 +1,11 @@
-from langgraph.graph import StateGraph, START, END
+from langgraph.graph import END, START, StateGraph
 from langgraph.types import Send
-from app.state import ResearchState
+
 from app.agents.planner import planner_node
 from app.agents.researcher import researcher_node
 from app.agents.summarizer import summarizer_node
 from app.agents.synthesizer import synthesizer_node
+from app.state import ResearchState
 
 
 def fan_out(state: ResearchState) -> list[Send]:

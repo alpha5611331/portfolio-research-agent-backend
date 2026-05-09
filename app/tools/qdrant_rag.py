@@ -1,7 +1,8 @@
 from langchain_core.tools import tool
+
+from app.config import settings
 from app.db.qdrant_client import get_client
 from app.services.embeddings import get_embeddings
-from app.config import settings
 
 
 @tool
@@ -10,12 +11,13 @@ async def qdrant_rag(query: str) -> list[dict]:
     embeddings = get_embeddings()
     vector = await embeddings.aembed_query(query)
     client = get_client()
-    results = await client.search(
+    response = await client.query_points(
         collection_name=settings.qdrant_collection,
-        query_vector=vector,
+        query=vector,
         limit=3,
         score_threshold=0.7,
     )
+    results = response.points
     return [
         {
             "url": hit.payload.get("url", ""),
